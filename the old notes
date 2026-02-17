@@ -23,7 +23,7 @@ SSH KEY UPLOAD
 ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub
 mkdir /users/home/directory/.ssh
-echo "your_public_key_here" >> /var/www/.ssh/authorized_keys
+echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC26azmuQ5xArCkUwA0AIzJlyEHPeiYD+XrmibTWCKijn6zCBsXa4VT1LMGPFX8Jw69uc12qMBYkSKstye44cG4JxJExk5uMEXUkqHj0zGIgyAvm0CUjFGDA1GX17qxkQaO1Fhc2i56iGJtvp5D73o9PH9dbqmHcEUUkZ0wiEj49ihFkb8TVYu4Pnb/N0AqXDWxZ0LqTF8PtCU79c3feUyzEjVsUNXHjmOS6kbLzby6bYVEefdtsu4iHFjyaE3/QEQ8vYmy+OVhBwk3y2DWs3FZhJqqF4h5UXr1CHn+0yiloVgEHRrKC/lhUHcQTiqxIz322R5gI0/1oiZpnzFnsn/AaJJeQ8H3l1dQQ16CnGTBkYkGtnbThjMfNLiNLzx6xR+FYP5262tEZlqre0L1umQpZQhmloia8GjGgFCTxXBqQd3Qd33Dhqmhydt4lH7019mNUHH9n1SyjgYKiNkfr+OW8YXs2kbyGHRzVoySnHdHPSHCp1bYaZ38kOVPzwP/Jg/x70TpQy1jxYGZxR6uuOhU59azZRjm+mp/UGOYM+f14Lf+0UxDoeHyJUe3doCm9DbpJm0G2fw5EosDa1JtvZLsYc4/I8XBXjpUIufjvlxziongl1l30KLt0eaDT+HTzYZLd6RbV+l4fwqeIjkt5EU/nCl6k8O4KMd5MH7OM2SUDQ== student@lin-ops" >> /var/www/.ssh/authorized_keys
 cat /users/home/directory/.ssh/authorized_keys
 
 
