@@ -1,8 +1,13 @@
 USE THIS TO GET INFORMATION ON PHP'S AND WHAT OPTIONS THE WEBSITE GIVES TO GET YOU STARTED
+```
 proxychains nmap -Pn -T5 -sT -p 80 --script http-enum.nse <IP>
+```
+```
 proxychains nmap -Pn -T5 -sT -p 80 --script http-robots.txt.nse <IP>
+```
+```
 wget -r http://192.168.
-
+```
 
 SQL INJECTION
 ```
